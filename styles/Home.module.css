@@ -1,116 +1,152 @@
-.container {
-  padding: 0 2rem;
-}
-
 .main {
-  min-height: 100vh;
-  padding: 4rem 0;
+  color: #fff;
+  background-color: black;
+  height: 100vh;
   flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.selector {
+  width: 15%;
+  background-color: rgb(24, 24, 24);
+  padding: 0rem;
+  height: 100%;
+}
+.panel{
+  width: 700px;
+  height: 500px;
+  background-color: white;
+  position: relative;
+}
+.dice{
+  cursor: pointer;
+  height: 75px;
+  aspect-ratio: 1;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  border: 7px solid black;
+  background-color: rgb(51, 51, 51);
+  padding: 1.5rem;
+  border-radius: 50%;
+}
+.controller{
+  overflow-y: scroll;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  width: 25%;
+  background-color: rgb(24, 24, 24);
+  padding: 0rem;
+  height: 100%;
 }
-
-.footer {
-  display: flex;
-  flex: 1;
-  padding: 2rem 0;
-  border-top: 1px solid #eaeaea;
-  justify-content: center;
-  align-items: center;
+.listitem{
+  cursor: pointer;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  text-shadow: 0 0 45px rgb(0, 0, 0);
+  text-align: center;
+  text-transform: uppercase;
+  margin: .8rem;
+  border-radius: 5px;
+  padding: 3rem;
 }
-
-.footer a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
+.selecteditem{
+  box-shadow: 0 0 0 10px rgb(117, 236, 236) inset;
 }
-
 .title a {
   color: #0070f3;
   text-decoration: none;
 }
-
 .title a:hover,
 .title a:focus,
 .title a:active {
   text-decoration: underline;
 }
-
 .title {
-  margin: 0;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: .9rem;
   line-height: 1.15;
-  font-size: 4rem;
+  font-size: 1.7rem;
+  letter-spacing: .2rem;
 }
-
-.title,
-.description {
-  text-align: center;
+.title span{
+  color: azure;
 }
-
-.description {
-  margin: 4rem 0;
-  line-height: 1.5;
-  font-size: 1.5rem;
-}
-
-.code {
-  background: #fafafa;
-  border-radius: 5px;
-  padding: 0.75rem;
-  font-size: 1.1rem;
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
-}
-
-.grid {
+.colorcontainer{
   display: flex;
+  width: 95%;
   align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  max-width: 800px;
-}
-
-.card {
-  margin: 1rem;
-  padding: 1.5rem;
-  text-align: left;
-  color: inherit;
-  text-decoration: none;
-  border: 1px solid #eaeaea;
+  margin: .5rem;
+  padding: .8rem;
   border-radius: 10px;
-  transition: color 0.15s ease, border-color 0.15s ease;
-  max-width: 300px;
+  background-color: rgb(73, 73, 73);
+}
+.colorcontainer span{
+  cursor: pointer;
+  margin-right: 1rem;
+  display: inline-block;
+  height: 30px;
+  aspect-ratio: 1;  
+  border-radius: 5px;
+}
+.slidercontainer{
+  width: 95%;
+  margin-block: 1rem;
+}
+.slider {
+  margin-block: 2rem;
+  flex: 1;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 5px;  
+  background: #ffffff;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
 }
 
-.card:hover,
-.card:focus,
-.card:active {
-  color: #0070f3;
-  border-color: #0070f3;
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%; 
+  background: #8e04aa;
+  cursor: pointer;
 }
 
-.card h2 {
-  margin: 0 0 1rem 0;
-  font-size: 1.5rem;
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #04AA6D;
+  cursor: pointer;
 }
-
-.card p {
-  margin: 0;
-  font-size: 1.25rem;
-  line-height: 1.5;
+.radiocontainer{
+  display: flex;
+  justify-content: space-around;
+  align-items: baseline;
 }
-
-.logo {
-  height: 1em;
-  margin-left: 0.5rem;
+.radio{
+  cursor: pointer;
+  flex: 1;
+  margin: .5rem;
+  padding: .5rem;
+  border: 4px solid rgba(4, 182, 226, 0.562);
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
 }
-
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
-  }
+.radio1,.radio2{
+  margin: 0.5rem 0 1rem 0;
+  height: 20px;
+  aspect-ratio: 1;
+  border: 2px solid white;
+  border-radius: 50%;
 }
