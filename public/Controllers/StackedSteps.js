@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import MainPanel from "../MainPanel";
 import ControllPanel from "../ControllPanel";
-import styles from "../../styles/Home.module.css";
+import { InputSlider } from "../UsefullComponents";
 import { randInt as r, mixColors as m } from "../Utilities";
 
 function StackedSteps() {
+  const svg = useRef();
   const [primClr, setPrimClr] = useState("#fa7268");
   const [secClr, setSecClr] = useState("#b0235f");
   const [count, setCount] = useState(5);
@@ -42,59 +43,29 @@ function StackedSteps() {
   return (
     <>
       <MainPanel handleClick={reset}>
-        <svg id="visual" viewBox="0 0 700 500" width={700} height={500}>
-          <rect x="0" y="0" width={700} height={500} fill={secClr}></rect>
-          {paths.map((p) => (
-            <path
-              key={paths.indexOf(p)}
-              d={p}
-              fill={m(primClr, secClr, paths.indexOf(p) / paths.length)}
-            />
-          ))}
-        </svg>
+        <div ref={svg}>
+          <svg id="visual" viewBox="0 0 700 500" width={700} height={500}>
+            <rect x="0" y="0" width={700} height={500} fill={secClr}></rect>
+            {paths.map((p) => (
+              <path
+                key={paths.indexOf(p)}
+                d={p}
+                fill={m(primClr, secClr, paths.indexOf(p) / paths.length)}
+              />
+            ))}
+          </svg>
+        </div>
       </MainPanel>
       <ControllPanel
+        elm={svg}
         primClr={primClr}
         setPrimClr={setPrimClr}
         secClr={secClr}
         setSecClr={setSecClr}
       >
-        <div className={styles.slidercontainer}>
-          <h5>COUNT</h5>
-          <input
-            className={styles.slider}
-            type="range"
-            min={2}
-            max={15}
-            step={1}
-            value={count}
-            onChange={(v) => setCount(v.target.value)}
-          />
-        </div>
-        <div className={styles.slidercontainer}>
-          <h5>COMPLEXITY</h5>
-          <input
-            className={styles.slider}
-            type="range"
-            min={3}
-            max={15}
-            step={1}
-            value={complexity}
-            onChange={(v) => setComplexity(v.target.value)}
-          />
-        </div>
-        <div className={styles.slidercontainer}>
-          <h5>CONTRAST</h5>
-          <input
-            className={styles.slider}
-            type="range"
-            min={0}
-            max={35}
-            step={5}
-            value={contrast}
-            onChange={(v) => setContrast(v.target.value)}
-          />
-        </div>
+        <InputSlider title="COUNT" min={2} max={15} value={count} setValue={setCount} />
+        <InputSlider title="COMPLEXITY" min={3} max={15} value={complexity} setValue={setComplexity} />
+        <InputSlider title="CONTRAST" min={0} max={35} step={5} value={contrast} setValue={setContrast} />
       </ControllPanel>
     </>
   );

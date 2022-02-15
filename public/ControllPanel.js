@@ -1,6 +1,7 @@
 import styles from "../styles/Home.module.css";
-import { CirclePicker } from "react-color";
+import { ColorPicker } from "./UsefullComponents";
 import { useState } from "react/cjs/react.development";
+import Modal from "./DownloadModal";
 
 function ControllPanel({
   primClr,
@@ -8,47 +9,31 @@ function ControllPanel({
   secClr,
   setSecClr,
   controllerId,
+  elm,
   children,
 }) {
-  const [p, setP] = useState(false);
-  const [s, setS] = useState(false);
+  const [modal, setModal] = useState(false);
+
   return (
     <div className={styles.controller}>
-      <h1 className={styles.title}>Controlls</h1>
-      <h3 style={{ marginRight: "auto", marginLeft: "1rem" }}>COLORS</h3>
-      {/* <h5>BACKGROUND</h5> */}
-      <div className={styles.colorcontainer}>
-        <span
-          onClick={() => setP(!p)}
-          style={{
-            backgroundColor: primClr,
-          }}
-        ></span>
-        <h4>{primClr}</h4>
+      <div className={styles.controllpanel}>
+        <h1 className={styles.title}>Controlls</h1>
+        <h3 style={{ marginRight: "auto", marginLeft: "1rem" }}>COLORS</h3>
+        {/* <h5>BACKGROUND</h5> */}
+        <ColorPicker color={primClr} setColor={setPrimClr} />
+        {/* <h5>FOREGROUND</h5> */}
+        <ColorPicker color={secClr} setColor={setSecClr} />
+        {children}
       </div>
-      {p && (
-        <CirclePicker
-          color={primClr}
-          onChangeComplete={(c, e) => setPrimClr(c.hex)}
-        />
-      )}
-      {/* <h5>FOREGROUND</h5> */}
-      <div className={styles.colorcontainer}>
-        <span
-          onClick={() => setS(!s)}
-          style={{
-            backgroundColor: secClr,
-          }}
-        ></span>
-        <h4>{secClr}</h4>
+      <div className={styles.downloadpanel}>
+        <button
+          onClick={() => setModal(true)}
+          className={styles.downloadbutton}
+        >
+          GET THIS SVG
+        </button>
       </div>
-      {s && (
-        <CirclePicker
-          color={secClr}
-          onChangeComplete={(c, e) => setSecClr(c.hex)}
-        />
-      )}
-      {children}
+      <Modal modal={modal} setModal={setModal} elm={elm} />
     </div>
   );
 }

@@ -4,9 +4,7 @@ function MainPanel({ handleClick, children }) {
   return (
     <div className={styles.panel}>
       {children}
-      <button onClick={handleClick} className={styles.dice}>
-        =
-      </button>
+      <button onClick={handleClick} className={styles.dice}></button>
     </div>
   );
 }
