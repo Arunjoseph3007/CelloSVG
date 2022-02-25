@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect } from "react";
-import styles from "../styles/Home.module.css";
+import { useState,useRef } from "react";
+import styles from "../../styles/Home.module.css";
 import { ChromePicker, BlockPicker } from "react-color";
+import { useOnClickOutside } from "./CustomHooks";
 
 export const RadioFill = ({
   title = "FILL",
@@ -54,9 +55,10 @@ export const InputSlider = ({
           onClick={() => setValue(value > min ? value - step : min)}
           className={styles.sliderbutton}
         >
-          {'<'}
+          {"<"}
         </div>
         <input
+          style={{ "--x": ((value - min) / (max - min)) * 100 + "%" }}
           className={styles.slider}
           type="range"
           min={min}
@@ -69,16 +71,21 @@ export const InputSlider = ({
           onClick={() => setValue(value < max ? value + step : max)}
           className={styles.sliderbutton}
         >
-          {'>'}
+          {">"}
         </div>
       </div>
     </div>
   );
 };
 
-export const ColorPicker = ({ color, setColor }) => {
-  const picker = useRef();
+export const ColorPicker = ({ id = 1, special = false, color, setColor ,remove}) => {
   const [isActive, setIsActive] = useState(false);
+  const picker=useRef();
+
+  const handleChange = (c, e) =>
+    special ? setColor(id, c.hex) : setColor(c.hex);
+
+  useOnClickOutside(picker,()=>{setIsActive(false);console.log("it");})
 
   return (
     <div className={styles.colorcontainer}>
@@ -89,13 +96,14 @@ export const ColorPicker = ({ color, setColor }) => {
         }}
       ></span>
       <h4>{color}</h4>
+      {special && <span onClick={()=>remove(id)} ></span> }
       {isActive && (
-        <div className={styles.block}>
+        <div ref={picker} className={styles.block}>
           <BlockPicker
-            ref={picker}
+            
             width="200px"
             color={color}
-            onChangeComplete={(c, e) => setColor(c.hex)}
+            onChangeComplete={(c, e) => handleChange(c, e)}
           />
         </div>
       )}

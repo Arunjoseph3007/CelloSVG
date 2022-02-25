@@ -30,3 +30,6 @@ body{
   cursor: move;
   background-color: rgb(172, 172, 172);
 }
+*::selection{
+  background-color: transparent;
+}

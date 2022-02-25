@@ -7,9 +7,12 @@ import { useEffect, useState, useRef } from "react";
 import { RadioFill, InputSlider } from "../Helpers/UsefullComponents";
 //functions
 import { getWave, getRandomArray } from "../Helpers/Utilities";
+//D3
+import * as d3 from "d3";
 
-function Wave() {
+function SuperWave() {
   const svg = useRef();
+  const svgRef = useRef();
   const [primClr, setPrimClr] = useState("#ffaa77");
   const [secClr, setSecClr] = useState("#bb00ff");
   const [complexity, setComplexity] = useState(5);
@@ -18,7 +21,33 @@ function Wave() {
   const [offset, setOffset] = useState(200);
   const [wave, setWave] = useState(getRandomArray(complexity, 5, 2.5));
 
-  const reset = () => setWave(getWave(complexity,contrast))
+  const svgD = d3.select(svgRef.current);
+  var w = 700; // width
+  var h = 500; // height
+
+  const data = [
+    3, 6, 2, 7, 5, 2, 0, 3, 8, 9, 2, 5, 9, 3, 6, 3, 6, 2, 7, 5, 2, 1, 3, 8, 9,
+    2, 5, 9, 2, 7,
+  ];
+
+  const x = d3.scaleLinear().domain([0, data.length]).range([0, w]);
+  const y = d3.scaleLinear().domain([0, 10]).range([h, 0]);
+
+  const line = d3
+    .line()
+    .x((d, i) => x(i))
+    .y((d) => y(d));
+
+  const graph = d3
+    .select(svg.current)
+    .append("svg")
+    .attr("width", w)
+    .attr("height", h);
+
+    graph.append("path").attr("d", line(data)).attr("fill", secClr);
+  const reset = () => {
+    setWave(getWave(complexity, contrast));
+  };
 
   useEffect(reset, [complexity, contrast]);
 
@@ -26,23 +55,13 @@ function Wave() {
     <>
       <MainPanel handleClick={reset}>
         <div ref={svg}>
-          <svg
+          {/* <svg
+            ref={svgRef}
             id="visual"
             viewBox="0 0 700 500"
             width="700"
             height="500"
-          >
-            <rect x="0" y="0" width="900" height="600" fill={primClr}></rect>
-            <path
-              stroke={secClr}
-              strokeWidth="20"
-              d={wave}
-              fill={fill ? secClr : "transparent"}
-              strokeLinecap="round"
-              strokeLinejoin="miter"
-              transform={`translate(0 -${offset})`}
-            />
-          </svg>
+          ></svg> */}
         </div>
       </MainPanel>
       <ControllPanel
@@ -80,4 +99,4 @@ function Wave() {
   );
 }
 
-export default Wave;
+export default SuperWave;

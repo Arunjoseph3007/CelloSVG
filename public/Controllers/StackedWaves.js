@@ -1,8 +1,12 @@
+//components
+import MainPanel from "../Components/MainPanel";
+import ControllPanel from "../Components/ControllPanel";
+//react
 import { useEffect, useState, useRef } from "react";
-import MainPanel from "../MainPanel";
-import ControllPanel from "../ControllPanel";
-import { InputSlider, ColorPicker } from "../UsefullComponents";
-import { getWave, mixColors as m } from "../Utilities";
+//UI modules
+import { InputSlider, ColorPicker } from "../Helpers/UsefullComponents";
+//functions
+import { getWave, mixColors as m } from "../Helpers/Utilities";
 
 function StackedWave() {
   const svg = useRef();

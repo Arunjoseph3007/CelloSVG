@@ -1,9 +1,11 @@
-import { useState, useRef } from "react";
-import { randNum } from "../Utilities";
-import { InputSlider } from "../UsefullComponents";
-import MainPanel from "../MainPanel";
-import ControllPanel from "../ControllPanel";
-import styles from "../../styles/Home.module.css";
+//Wrappers
+import MainPanel from "../Components/MainPanel";
+import ControllPanel from "../Components/ControllPanel";
+//UI Modules
+import { InputSlider } from "../Helpers/UsefullComponents";
+//React
+import { useState, useRef} from "react/cjs/react.development";
+
 
 function RadialGradient() {
   const svg = useRef();

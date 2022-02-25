@@ -1,9 +1,12 @@
+//Wrappers
+import MainPanel from "../Components/MainPanel";
+import ControllPanel from "../Components/ControllPanel";
+//REact
 import { useState, useEffect, useRef } from "react";
-import MainPanel from "../MainPanel";
-import ControllPanel from "../ControllPanel";
-import { RadioFill ,InputSlider} from "../UsefullComponents";
-import styles from "../../styles/Home.module.css";
-import { getPositionsAndRadius as getCircles } from "../Utilities";
+//UI Modules
+import { RadioFill ,InputSlider} from "../Helpers/UsefullComponents";
+//Functions
+import { getPositionsAndRadius as getCircles } from "../Helpers/Utilities";
 
 function Circle() {
   const svg = useRef();

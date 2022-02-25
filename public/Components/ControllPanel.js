@@ -1,5 +1,5 @@
-import styles from "../styles/Home.module.css";
-import { ColorPicker } from "./UsefullComponents";
+import styles from "../../styles/Home.module.css";
+import { ColorPicker } from "../Helpers/UsefullComponents";
 import { useState } from "react/cjs/react.development";
 import Modal from "./DownloadModal";
 

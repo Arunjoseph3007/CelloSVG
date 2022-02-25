@@ -34,7 +34,7 @@
   /* border-radius: 50%; */
   /* transform: rotate(45deg); */
 }
-.dice::after{
+.dice::after {
   content: "";
   position: absolute;
   inset: 8px;
@@ -56,23 +56,41 @@
   background-color: #222;
   color: #fff;
   line-height: 1.3rem;
-  letter-spacing: .2rem;
+  letter-spacing: 0.2rem;
   font-weight: 900;
   width: 50vw;
   border-radius: 5px;
 }
-.close{
+.close {
   cursor: pointer;
   position: absolute;
   top: -10px;
   right: -10px;
   border: none;
   border-radius: 50%;
-  background-color: white;
-  color: black;
-  font-size: 2rem;
-  height: 35px;
+  background-color: rgb(224, 224, 224);
+  height: 38px;
   aspect-ratio: 1;
+  transition: all 0.2s ease;
+}
+.close:hover {
+  background-color: white;
+}
+.close::after,
+.close::before {
+  transition: all 0.2s ease;
+  position: absolute;
+  content: "";
+  background: rgb(0, 0, 0);
+  height: 25px;
+  width: 5px;
+  border-radius: 2px;
+  top: 50%;
+  bottom: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
 }
 .modalbox {
   position: relative;
@@ -104,19 +122,25 @@
   justify-content: center;
   align-items: center;
 }
+.btncontainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
 .downloadbutton {
-  letter-spacing: .2rem;
+  letter-spacing: 0.2rem;
   box-shadow: 0 0 5px #8e04aa;
   cursor: pointer;
   border: 3px solid #8e04aa;
   border-radius: 5px;
   background: #8e04aa;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   padding: 0.5rem 1rem;
   color: white;
   transition: all 0.5s ease-in-out;
 }
-.downloadbutton:hover {
+.downloadbutton:hover{
   background: transparent;
   color: #8e04aa;
 }
@@ -144,6 +168,7 @@
   text-decoration: underline;
 }
 .title {
+  /* background-color: rgb(94, 94, 94); */
   text-transform: uppercase;
   font-weight: bold;
   padding: 0.9rem;
@@ -165,29 +190,33 @@
   border-radius: 10px;
   background-color: rgb(73, 73, 73);
 }
-.block{
+.colorcontainer h4 {
+  margin-left: 1rem;
+  flex: 1;
+}
+.colorcontainer span {
+  background-color: black;
+  border-radius: 5px;
+  height: 30px;
+  aspect-ratio: 1;
+  cursor: pointer;
+}
+.block {
   z-index: 999;
   position: absolute;
   top: 60px;
   left: 5px;
 }
-.colorcontainer span {
-  cursor: pointer;
-  margin-right: 1rem;
-  display: inline-block;
-  height: 30px;
-  aspect-ratio: 1;
-  border-radius: 5px;
-}
 .slidercontainer {
   width: 90%;
   margin: 1rem;
 }
-.inputcontrols{
+.inputcontrols {
+  position: relative;
   display: flex;
   align-items: center;
 }
-.sliderbutton{
+.sliderbutton {
   font-family: cursive;
   line-height: 28px;
   text-align: center;
@@ -202,11 +231,13 @@
   color: rgb(119, 119, 119);
   transition: all 0.3s ease;
 }
-.sliderbutton:hover{
-  background-color:rgb(51, 51, 51) ;
+.sliderbutton:hover {
+  background-color: rgb(51, 51, 51);
   color: rgb(233, 233, 233);
 }
 .slider {
+  background-color: yellow;
+  position: relative;
   margin-inline: 1rem;
   margin-block: 2rem;
   flex: 1;
@@ -220,14 +251,27 @@
   -webkit-transition: 0.2s ease-in-out;
   transition: opacity 0.2s ease;
 }
-
+.slider::after {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  content: "";
+  border-radius: 50%;
+  position: absolute;
+  left: var(--x);
+  height: 25px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  aspect-ratio: 1;
+  background-color: rgb(255, 0, 234);
+}
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  background: #e15efc;
+  background: transparent;
+  /* background: pink; */
   cursor: pointer;
 }
 
@@ -260,4 +304,15 @@
   aspect-ratio: 1;
   border: 2px solid white;
   border-radius: 50%;
+}
+.addbtn {
+  width: 90%;
+  border: none;
+  background-color: black;
+  color: grey;
+  margin-inline: 1rem;
+  font-size: 3rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
 }

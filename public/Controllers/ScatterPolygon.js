@@ -1,12 +1,16 @@
-import { useState, useEffect, useRef } from "react";
-import MainPanel from "../MainPanel";
-import ControllPanel from "../ControllPanel";
-import { RadioFill,InputSlider } from "../UsefullComponents";
+//Wrappers
+import MainPanel from "../Components/MainPanel";
+import ControllPanel from "../Components/ControllPanel";
+//UI Modules
+import { InputSlider,RadioFill } from "../Helpers/UsefullComponents";
+//React
+import { useState, useRef} from "react/cjs/react.development";
+//functions
 import {
   randInt as r,
   getPositionsAndRadius as getPoly,
   getPolygonPath as getPath,
-} from "../Utilities";
+} from "../Helpers/Utilities";
 
 function ScatterPolygon() {
   const svg = useRef();

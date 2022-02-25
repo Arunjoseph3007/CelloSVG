@@ -1,9 +1,16 @@
-import MainPanel from "../MainPanel";
-import ControllPanel from "../ControllPanel";
-import { InputSlider } from "../UsefullComponents";
-import { useState, useRef } from "react/cjs/react.development";
-import { randInt } from "../Utilities";
-import styles from "../../styles/Home.module.css";
+//Wrappers
+import MainPanel from "../Components/MainPanel";
+import ControllPanel from "../Components/ControllPanel";
+//UI Modules
+import { InputSlider, ColorPicker } from "../Helpers/UsefullComponents";
+//React
+import { useState, useRef} from "react/cjs/react.development";
+//functions
+import { randClr, randInt } from "../Helpers/Utilities";
+//Hooks
+import { useArray } from "../Helpers/CustomHooks";
+//styles
+import styles from "../../styles/Home.module.css"
 
 function LinearGradient() {
   const svg = useRef();
@@ -11,6 +18,7 @@ function LinearGradient() {
   const [secClr, setSecClr] = useState("#345a67");
   const [rotateAngle, setRotateAngle] = useState(90);
   const [offsets, setOffsets] = useState([5, 95]);
+  const [ colors, setColors, {push, update, remove} ] = useArray([]);
 
   const reset = () => setOffsets([randInt(0, 50), randInt(50, 100)]);
 
@@ -24,8 +32,21 @@ function LinearGradient() {
                 id="myGradient"
                 gradientTransform={`rotate(${rotateAngle})`}
               >
-                <stop offset={offsets[0] + "%"} stopColor={primClr} />
-                <stop offset={offsets[1] + "%"} stopColor={secClr} />
+                <stop
+                  offset={(100 * 1) / (2 + colors.length) + "%"}
+                  stopColor={primClr}
+                />
+                <stop
+                  offset={(100 * 2) / (2 + colors.length) + "%"}
+                  stopColor={secClr}
+                />
+                {colors.map((elm, i) => (
+                  <stop
+                    key={i}
+                    offset={(100 * (i + 3)) / (2 + colors.length) + "%"}
+                    stopColor={elm}
+                  />
+                ))}
               </linearGradient>
             </defs>
             <rect
@@ -45,7 +66,16 @@ function LinearGradient() {
         secClr={secClr}
         setSecClr={setSecClr}
       >
-        <InputSlider title="ROTATION" max={180} value={rotateAngle} setValue={setRotateAngle}/>
+        {colors.map((elm, i) => (
+          <ColorPicker key={i} id={i} special={true} color={elm} setColor={update} remove={remove} />
+        ))}
+        <button className={styles.addbtn} onClick={()=>push(randClr())} >+</button>
+        <InputSlider
+          title="ROTATION"
+          max={180}
+          value={rotateAngle}
+          setValue={setRotateAngle}
+        />
       </ControllPanel>
     </>
   );

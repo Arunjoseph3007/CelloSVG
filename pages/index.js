@@ -1,7 +1,7 @@
 //Hooks
 import { useState } from "react";
 //Components
-import Selector from "../public/Selector";
+import Selector from "../public/Components/Selector";
 //Controllers
 import LinearGradient from "../public/Controllers/LinearGradient";
 import RadialGradient from "../public/Controllers/RadialGradient";
@@ -11,6 +11,8 @@ import ScatterPolygon from "../public/Controllers/ScatterPolygon";
 import Rain from "../public/Controllers/Rain";
 import Wave from "../public/Controllers/Wave";
 import StackedWave from "../public/Controllers/StackedWaves";
+import SuperWave from "../public/Controllers/SuperWave";
+import CoolRectangles from "../public/Controllers/CoolRectangles";
 //Styles
 import styles from "../styles/Home.module.css";
 //Utils
@@ -38,6 +40,8 @@ export default function Home() {
         {controllerId === 5 && <Rain />}
         {controllerId === 6 && <Wave />}
         {controllerId === 7 && <StackedWave />}
+        {controllerId === 8 && <SuperWave />}
+        {controllerId === 9 && <CoolRectangles />}
       </main>
     </div>
   );

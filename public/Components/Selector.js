@@ -1,5 +1,5 @@
-import { AllControllers } from "./ControllerList";
-import styles from "../styles/Home.module.css";
+import { AllControllers } from "../Helpers/ControllerList";
+import styles from "../../styles/Home.module.css";
 
 function Selector({ controllerId, setControllerId }) {
   return (
@@ -12,11 +12,14 @@ function Selector({ controllerId, setControllerId }) {
           {AllControllers.map((ThisController) => (
             <li
               key={ThisController.id}
+              onClick={() => setControllerId(ThisController.id)}
               className={`${styles.listitem} ${
                 ThisController.id === controllerId ? styles.selecteditem : ""
               }`}
-              onClick={() => setControllerId(ThisController.id)}
-              style={{ background: `url(${ThisController.thumbnail})` }}
+              style={{
+                color: ThisController.color || "black",
+                background: `url(${ThisController.thumbnail})`,
+              }}
             >
               {ThisController.name}
             </li>

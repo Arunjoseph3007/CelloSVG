@@ -1,8 +1,10 @@
-import { useState, useEffect, useRef } from "react";
-import MainPanel from "../MainPanel";
-import ControllPanel from "../ControllPanel";
-import { InputSlider } from "../UsefullComponents";
-import {getPositionsAndRadius as getRain } from "../Utilities";
+//Wrappers
+import MainPanel from "../Components/MainPanel";
+import ControllPanel from "../Components/ControllPanel";
+//UI Modules
+import { InputSlider } from "../Helpers/UsefullComponents";
+//React
+import { useState, useRef} from "react/cjs/react.development";
 
 function Rain() {
   const svg = useRef();
