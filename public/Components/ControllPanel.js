@@ -1,6 +1,6 @@
 import styles from "../../styles/Home.module.css";
 import { ColorPicker } from "../Helpers/UsefullComponents";
-import { useState } from "react/cjs/react.development";
+import { useState } from "react";
 import Modal from "./DownloadModal";
 
 function ControllPanel({
