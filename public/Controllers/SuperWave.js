@@ -6,48 +6,45 @@ import { useEffect, useState, useRef } from "react";
 //UI components
 import { RadioFill, InputSlider } from "../Helpers/UsefullComponents";
 //functions
-import { getWave, getRandomArray } from "../Helpers/Utilities";
+import {
+  getWave,
+  getRandomArray,
+  getArrayOfRandomPoints,
+} from "../Helpers/Utilities";
 //D3
 import * as d3 from "d3";
+//styles
+import styles from "../../styles/Home.module.css";
 
 function SuperWave() {
   const svg = useRef();
-  const svgRef = useRef();
   const [primClr, setPrimClr] = useState("#ffaa77");
   const [secClr, setSecClr] = useState("#bb00ff");
   const [complexity, setComplexity] = useState(5);
   const [contrast, setContrast] = useState(25);
   const [fill, setFill] = useState(true);
-  const [offset, setOffset] = useState(200);
-  const [wave, setWave] = useState(getRandomArray(complexity, 5, 2.5));
+  const [shape, setShape] = useState("wave");
+  const [offset, setOffset] = useState(300);
+  const [wave, setWave] = useState(getArrayOfRandomPoints());
 
-  const svgD = d3.select(svgRef.current);
-  var w = 700; // width
-  var h = 500; // height
+  const shapes = ["wave", "step", "line"];
 
-  const data = [
-    3, 6, 2, 7, 5, 2, 0, 3, 8, 9, 2, 5, 9, 3, 6, 3, 6, 2, 7, 5, 2, 1, 3, 8, 9,
-    2, 5, 9, 2, 7,
-  ];
+  const line = d3.line();
 
-  const x = d3.scaleLinear().domain([0, data.length]).range([0, w]);
-  const y = d3.scaleLinear().domain([0, 10]).range([h, 0]);
-
-  const line = d3
-    .line()
-    .x((d, i) => x(i))
-    .y((d) => y(d));
-
-  const graph = d3
-    .select(svg.current)
-    .append("svg")
-    .attr("width", w)
-    .attr("height", h);
-
-    graph.append("path").attr("d", line(data)).attr("fill", secClr);
-  const reset = () => {
-    setWave(getWave(complexity, contrast));
+  const getWaveFromPoints = (wave, shape) => {
+    switch (shape) {
+      case "step":
+        return line.curve(d3.curveStep)(wave);
+      case "wave":
+        return line.curve(d3.curveCardinal)(wave);
+      case "line":
+        return line(wave);
+      default:
+        return line(wave);
+    }
   };
+
+  const reset = () => setWave(getArrayOfRandomPoints(complexity,contrast));
 
   useEffect(reset, [complexity, contrast]);
 
@@ -55,13 +52,16 @@ function SuperWave() {
     <>
       <MainPanel handleClick={reset}>
         <div ref={svg}>
-          {/* <svg
-            ref={svgRef}
-            id="visual"
-            viewBox="0 0 700 500"
-            width="700"
-            height="500"
-          ></svg> */}
+          <svg id="visual" viewBox="0 0 700 500" width="700" height="500">
+            <rect width="700" height="500" fill={primClr}></rect>
+            <path
+              transform={`translate(0 ${-offset})`}
+              d={getWaveFromPoints(wave, shape)}
+              stroke={secClr}
+              strokeWidth={10}
+              fill={fill ? secClr : "transparent"}
+            ></path>
+          </svg>
         </div>
       </MainPanel>
       <ControllPanel
@@ -71,25 +71,46 @@ function SuperWave() {
         secClr={secClr}
         setSecClr={setSecClr}
       >
+        <div className={styles.select}>
+          <h5>SHAPE</h5>
+          <div className={styles.colorcontainer}>
+            {shapes.map((s, i) => (
+              <div
+                style={{
+                  textTransform:"uppercase",
+                  textAlign:"center",
+                  borderRadius:'5px',
+                  padding:'1rem',
+                  flex: 1,
+                  background: shape === s ? "lightblue" : "",
+                }}
+                key={i}
+                onClick={() => setShape(s)}
+              >
+                {s}
+              </div>
+            ))}
+          </div>
+        </div>
         <RadioFill fill={fill} setFill={setFill} />
         <InputSlider
           title="COMPLEXITY"
           min={3}
-          max={15}
+          max={25}
           value={complexity}
           setValue={setComplexity}
         />
         <InputSlider
           title="CONTRAST"
           min={0}
-          max={50}
+          max={100}
           step={5}
           value={contrast}
           setValue={setContrast}
         />
         <InputSlider
           title="BASE"
-          min={0}
+          min={-100}
           max={450}
           value={offset}
           setValue={setOffset}

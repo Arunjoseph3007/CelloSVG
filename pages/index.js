@@ -9,7 +9,6 @@ import Circle from "../public/Controllers/Circle";
 import StackedSteps from "../public/Controllers/StackedSteps";
 import ScatterPolygon from "../public/Controllers/ScatterPolygon";
 import Rain from "../public/Controllers/Rain";
-import Wave from "../public/Controllers/Wave";
 import StackedWave from "../public/Controllers/StackedWaves";
 import SuperWave from "../public/Controllers/SuperWave";
 import CoolRectangles from "../public/Controllers/CoolRectangles";
@@ -19,7 +18,7 @@ import styles from "../styles/Home.module.css";
 import Head from "next/head";
 
 export default function Home() {
-  const [controllerId, setControllerId] = useState(0);
+  const [controllerId, setControllerId] = useState(9);
   
   return (
     <div>
@@ -38,7 +37,6 @@ export default function Home() {
         {controllerId === 3 && <StackedSteps />}
         {controllerId === 4 && <ScatterPolygon />}
         {controllerId === 5 && <Rain />}
-        {controllerId === 6 && <Wave />}
         {controllerId === 7 && <StackedWave />}
         {controllerId === 8 && <SuperWave />}
         {controllerId === 9 && <CoolRectangles />}

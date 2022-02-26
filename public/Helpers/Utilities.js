@@ -104,3 +104,16 @@ export const getPolygonPath = (n, r) => {
     } `;
   return path + " Z";
 };
+
+export const getArrayOfRandomPoints = (complexity = 10, contrast = 25) => {
+  const stepWidth = 700 / complexity;
+  const newArray = [];
+  newArray.push([-10, 1500]);
+  for (let i = -10; i <= 750; ) {
+    newArray.push([i, randInt(300 - contrast, +contrast + 300)]);
+    let incrementX = randInt(stepWidth - 5, +stepWidth + 5);
+    i += incrementX;
+  }
+  newArray.push([750, 1500]);
+  return newArray;
+};
