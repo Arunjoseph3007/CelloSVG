@@ -103,13 +103,23 @@ export const getArrayOfRandomPoints = (complexity = 10, contrast = 25) => {
   const stepWidth = 700 / complexity;
   const newArray = [];
   newArray.push([-10, 1500]);
-  newArray.push([-5,0])
+  newArray.push([-5, 0]);
   for (let i = -10; i <= 750; ) {
     newArray.push([i, randInt(-contrast, +contrast)]);
     let incrementX = randInt(stepWidth - 5, +stepWidth + 5);
     i += incrementX;
   }
-  newArray.push([710,0])
+  newArray.push([710, 0]);
   newArray.push([750, 1500]);
   return newArray;
+};
+
+export const getBlob = () => {
+  const blob = [];
+  for (let i = 0; i < 360; ) {
+    blob.push([Math.sin(i), Math.cos(i)]);
+    const incrementAngle = randInt(10, 20);
+    i += incrementAngle;
+  }
+  return blob;
 };

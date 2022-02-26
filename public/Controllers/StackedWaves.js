@@ -16,17 +16,17 @@ import * as d3 from "d3";
 //styles
 import styles from "../../styles/Home.module.css";
 
-function SuperWave() {
+function StackedWave() {
   const svg = useRef();
   const [primClr, setPrimClr] = useState("#ffaa77");
   const [secClr, setSecClr] = useState("#bb00ff");
   const [terClr, setTerClr] = useState("#bbf");
   const [complexity, setComplexity] = useState(13);
   const [contrast, setContrast] = useState(30);
-  const [count, setCount] = useState(6);
+  const [count, setCount] = useState(1);
   const [shape, setShape] = useState("wave");
   const [offset, setOffset] = useState(-200);
-  const [waves, setWaves] = useState([]);
+  const [waves, setWaves] = useState([[[0,0],[100,100],[200,200],[450,12],[0,30]]]);
 
   const shapes = ["wave", "step", "line"];
 
@@ -51,10 +51,10 @@ function SuperWave() {
       newWaves.push(getArrayOfRandomPoints(complexity, contrast));
     }
     setWaves(newWaves);
-    console.log(waves);
+    // console.log(waves);
   };
 
-  useEffect(reset, [complexity, contrast]);
+  useEffect(reset, [complexity, contrast,count]);
 
   return (
     <>
@@ -62,18 +62,9 @@ function SuperWave() {
         <div ref={svg}>
           <svg id="visual" viewBox="0 0 700 500" width="700" height="500">
             <rect width="700" height="500" fill={primClr}></rect>
-            <path
-              d={getWaveFromPoints([[0, 0], 50, 40], [60, 70],shape)}
-              fill={terClr}
-            />
-            {waves.map((wave, i) => {
-              <path
-                key={i}
-                d={getWaveFromPoints(wave, shape)}
-                // d="M 0 0 L 50 40 L 60 70 Z"
-                fill={mixColors(secClr, terClr, i / count)}
-                // fill={terClr}
-              ></path>;
+            {waves.map((w,i)=>{
+              console.log("this is",i,getWaveFromPoints(w,shape));
+              <path key={i} fill={secClr} d={getWaveFromPoints(w,shape)}  />
             })}
           </svg>
         </div>
@@ -141,4 +132,4 @@ function SuperWave() {
   );
 }
 
-export default SuperWave;
+export default StackedWave;
