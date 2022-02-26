@@ -4,7 +4,7 @@ import ControllPanel from "../Components/ControllPanel";
 //UI modules
 import { InputSlider, RadioFill } from "../Helpers/UsefullComponents";
 //React
-import { useState, useRef, useEffect } from "react/cjs/react.development";
+import { useState, useRef, useEffect } from "react";
 //functions
 import { randInt, randClr } from "../Helpers/Utilities";
 

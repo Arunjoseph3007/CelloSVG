@@ -4,7 +4,7 @@ import ControllPanel from "../Components/ControllPanel";
 //UI Modules
 import { InputSlider } from "../Helpers/UsefullComponents";
 //React
-import { useState, useRef,useEffect} from "react/cjs/react.development";
+import { useState, useRef,useEffect} from "react";
 //functions
 import {getPositionsAndRadius as getRain} from '../Helpers/Utilities'
 
