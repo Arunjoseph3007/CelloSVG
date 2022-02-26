@@ -1,15 +1,9 @@
 import styles from "../../styles/Home.module.css";
 import { useState, useRef, useEffect } from "react";
 
-function htmlToElem(html) {
-  let temp = document.createElement('template');
-  html = html.trim();
-  temp.innerHTML = html;
-  return temp.content.firstChild;
-}
-
-const Modal = ({ modal, setModal, elm}) => {
+const Modal = ({ modal, setModal, elm }) => {
   const [copied, setCopied] = useState(false);
+  const canvasRef = useRef(null);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(elm.current.innerHTML);
@@ -17,50 +11,37 @@ const Modal = ({ modal, setModal, elm}) => {
     setTimeout(() => setCopied(false), 20000);
   };
 
-  // console.log("hey",canvasRef.current)
-
-  const getURL = (svgRef) => {
-    const blob1 = new Blob([svgRef.current.innerHTML]);
-    const url = URL.createObjectURL(blob1);
-    return url;
+  const handlePng = () => {
+    const canvas = canvasRef.current;
+    const svg = htmlToElem(elm.current.innerHTML);
+    const data = new XMLSerializer().serializeToString(svg);
+    const win = window.URL || window.webkitURL || window;
+    const img = new Image();
+    const blob = new Blob([data], { type: "image/svg+xml" });
+    const url = win.createObjectURL(blob);
+    img.onload = function () {
+      canvas.getContext("2d").drawImage(img, 0, 0);
+      win.revokeObjectURL(url);
+      const uri = canvas
+        .toDataURL("image/png")
+        .replace("image/png", "octet/stream");
+      const a = document.createElement("a");
+      document.body.appendChild(a);
+      a.style = "display: none";
+      a.href = uri;
+      a.download ="cello-svg.png";
+      a.click();
+      window.URL.revokeObjectURL(uri);
+      document.body.removeChild(a);
+    };
+    img.src = url;
   };
 
-  // let canvas
-  // useEffect(()=>{
-  //   canvas=document.querySelector('#canva')
-  //   console.log(canvas)
-  // })
+  let imgURI;
 
-
-  // const svgToPng = (svgRef) => {
-  //     const template = htmlToElem(svgRef.current.innerHTML)
-  //     const data = new XMLSerializer().serializeToString(template);
-  //     const win = window.URL || window.webkitURL || window;
-      
-  //     const img=new Image();
-  //     const blob = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
-  //     const url = win.createObjectURL(blob);
-
-  //     // const canvas = canvasRef.current;
-  //     // const canvas = document.createElement('canvas');
-  //     var ctx = canvas.getContext('2d');
-    
-  //     img.onload = function () {
-  //       ctx.drawImage(img, 0, 0);
-  //       win.revokeObjectURL(url);
-    
-  //       const imgURI = canvas
-  //           .toDataURL('image/png')
-  //           .replace('image/png', 'image/octet-stream');
-
-  //     return imgURI;
-  //   }
-  // };
-
-  if (!modal) return null;
   return (
     <div onClick={() => setModal(false)} className={styles.modal}>
-      <canvas id="canva" ></canvas>
+      <canvas width={700} height={500} style={{position:"absolute",opacity:0}} ref={canvasRef} />
       <div onClick={(e) => e.stopPropagation()} className={styles.modalbox}>
         <button
           className={styles.close}
@@ -83,13 +64,14 @@ const Modal = ({ modal, setModal, elm}) => {
           >
             DOWNLOAD SVG
           </a>
-          {/* <a
+          <a
+            onClick={handlePng}
             download="cello-svg.png"
             className={styles.downloadbutton}
-            href={svgToPng(elm)}
+            href={imgURI}
           >
             DOWNLOAD PNG
-          </a> */}
+          </a>
         </div>
       </div>
     </div>
@@ -97,3 +79,16 @@ const Modal = ({ modal, setModal, elm}) => {
 };
 
 export default Modal;
+
+function htmlToElem(html) {
+  let temp = document.createElement("template");
+  html = html.trim();
+  temp.innerHTML = html;
+  return temp.content.firstChild;
+}
+
+const getURL = (svgRef) => {
+  const blob1 = new Blob([svgRef.current.innerHTML]);
+  const url = URL.createObjectURL(blob1);
+  return url;
+};

@@ -6,11 +6,7 @@ import { useEffect, useState, useRef } from "react";
 //UI components
 import { RadioFill, InputSlider } from "../Helpers/UsefullComponents";
 //functions
-import {
-  getWave,
-  getRandomArray,
-  getArrayOfRandomPoints,
-} from "../Helpers/Utilities";
+import { getArrayOfRandomPoints } from "../Helpers/Utilities";
 //D3
 import * as d3 from "d3";
 //styles
@@ -20,11 +16,11 @@ function SuperWave() {
   const svg = useRef();
   const [primClr, setPrimClr] = useState("#ffaa77");
   const [secClr, setSecClr] = useState("#bb00ff");
-  const [complexity, setComplexity] = useState(5);
-  const [contrast, setContrast] = useState(25);
+  const [complexity, setComplexity] = useState(13);
+  const [contrast, setContrast] = useState(30);
   const [fill, setFill] = useState(true);
   const [shape, setShape] = useState("wave");
-  const [offset, setOffset] = useState(300);
+  const [offset, setOffset] = useState(-200);
   const [wave, setWave] = useState(getArrayOfRandomPoints());
 
   const shapes = ["wave", "step", "line"];
@@ -44,7 +40,7 @@ function SuperWave() {
     }
   };
 
-  const reset = () => setWave(getArrayOfRandomPoints(complexity,contrast));
+  const reset = () => setWave(getArrayOfRandomPoints(complexity, contrast));
 
   useEffect(reset, [complexity, contrast]);
 
@@ -77,10 +73,10 @@ function SuperWave() {
             {shapes.map((s, i) => (
               <div
                 style={{
-                  textTransform:"uppercase",
-                  textAlign:"center",
-                  borderRadius:'5px',
-                  padding:'1rem',
+                  textTransform: "uppercase",
+                  textAlign: "center",
+                  borderRadius: "5px",
+                  padding: "1rem",
                   flex: 1,
                   background: shape === s ? "lightblue" : "",
                 }}
@@ -110,8 +106,8 @@ function SuperWave() {
         />
         <InputSlider
           title="BASE"
-          min={-100}
-          max={450}
+          min={-500}
+          max={0}
           value={offset}
           setValue={setOffset}
         />

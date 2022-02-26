@@ -4,7 +4,9 @@ import ControllPanel from "../Components/ControllPanel";
 //UI Modules
 import { InputSlider } from "../Helpers/UsefullComponents";
 //React
-import { useState, useRef} from "react/cjs/react.development";
+import { useState, useRef,useEffect} from "react/cjs/react.development";
+//functions
+import {getPositionsAndRadius as getRain} from '../Helpers/Utilities'
 
 function Rain() {
   const svg = useRef();

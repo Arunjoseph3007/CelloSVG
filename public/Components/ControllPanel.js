@@ -33,7 +33,7 @@ function ControllPanel({
           GET THIS SVG
         </button>
       </div>
-      <Modal modal={modal} setModal={setModal} elm={elm} />
+      {modal && <Modal modal={modal} setModal={setModal} elm={elm} />}
     </div>
   );
 }

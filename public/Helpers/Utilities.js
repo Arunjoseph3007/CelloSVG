@@ -26,12 +26,6 @@ export const getRandomArray = (count, median, contrast = 0) => {
 //Randon Random Numbers
 export const randNum = (a, b) => Math.random() * (b - a) + a;
 
-//Max
-export const max = (a, b) => (a > b ? a : b);
-
-//Min
-export const min = (a, b) => (a < b ? a : b);
-
 //Random Color
 export const randClr = () =>
   "#" + Math.floor(Math.random() * 16777215).toString(16);
@@ -109,11 +103,13 @@ export const getArrayOfRandomPoints = (complexity = 10, contrast = 25) => {
   const stepWidth = 700 / complexity;
   const newArray = [];
   newArray.push([-10, 1500]);
+  newArray.push([-5,0])
   for (let i = -10; i <= 750; ) {
-    newArray.push([i, randInt(300 - contrast, +contrast + 300)]);
+    newArray.push([i, randInt(-contrast, +contrast)]);
     let incrementX = randInt(stepWidth - 5, +stepWidth + 5);
     i += incrementX;
   }
+  newArray.push([710,0])
   newArray.push([750, 1500]);
   return newArray;
 };
