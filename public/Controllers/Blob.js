@@ -7,20 +7,21 @@ import { useState, useEffect, useRef } from "react";
 import { RadioFill, InputSlider } from "../Helpers/UsefullComponents";
 //Functions
 import { getBlob } from "../Helpers/Utilities";
+import { getSmoothPath } from "../Helpers/D3Helpers";
 
 function Blob() {
   const svg = useRef();
-  const [primClr, setPrimClr] = useState("#30005f");
-  const [secClr, setSecClr] = useState("#cc139e");
+  const [primClr, setPrimClr] = useState("#13022e");
+  const [secClr, setSecClr] = useState("#f79000");
   const [fill, setFill] = useState(true);
-  const [size, setSize] = useState(350);
-  const [count, setCount] = useState(10);
+  const [size, setSize] = useState(0.8);
+  const [complexity, setComplexity] = useState(8);
   const [contrast, setContrast] = useState(0.3);
-  const [circle, setCircle] = useState();
+  const [blob, setBlob] = useState([]);
 
-  const reset = () => setCircle(getBlob());
+  const reset = () => setBlob(getBlob(complexity, contrast));
 
-  useEffect(reset, [contrast, count, size]);
+  useEffect(reset, [contrast, complexity]);
 
   return (
     <>
@@ -29,10 +30,13 @@ function Blob() {
           <svg viewBox="0 0 700 500" width={700} height={500}>
             <rect x="0" y="0" width={700} height={500} fill={primClr}></rect>
             <path
-              transform="translate(350 250)"
-              d={"M 0 0 L 50 60 Z"}
+              transform={`translate(350 250) scale(${size})`}
+              d={getSmoothPath(blob)}
               fill={fill ? secClr : "transparent"}
               stroke={secClr}
+              strokeWidth={20}
+              strokeLinejoin="round"
+              style={{transition:"all 1s cubic-bezier(0.55, -1.54, 0.49, 2.55) 0s"}}
             />
           </svg>
         </div>
@@ -47,22 +51,23 @@ function Blob() {
         <RadioFill fill={fill} setFill={setFill} />
         <InputSlider
           title="SIZE"
-          min={200}
-          max={600}
-          step={10}
+          min={0.1}
+          max={2}
+          step={0.1}
           value={size}
           setValue={setSize}
         />
         <InputSlider
-          title="COUNT"
-          min={5}
+          title="COMPLEXITY"
+          min={3}
           max={15}
-          value={count}
-          setValue={setCount}
+          value={complexity}
+          setValue={setComplexity}
         />
         <InputSlider
           title="CONTRAST"
-          max={0.6}
+          min={0}
+          max={1}
           step={0.1}
           value={contrast}
           setValue={setContrast}

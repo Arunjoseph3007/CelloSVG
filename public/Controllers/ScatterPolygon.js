@@ -15,8 +15,8 @@ import {
 function ScatterPolygon() {
   const svg = useRef();
   const [primClr, setPrimClr] = useState("#0d0712");
-  const [isRandom,setIsRandom]=useState(false);
   const [secClr, setSecClr] = useState("#e30e4e");
+  const [isRandom,setIsRandom]=useState(false);
   const [fill, setFill] = useState(false);
   const [size, setSize] = useState(350);
   const [count, setCount] = useState(10);

@@ -13,6 +13,7 @@ import StackedWave from "../public/Controllers/StackedWaves";
 import SuperWave from "../public/Controllers/SuperWave";
 import CoolRectangles from "../public/Controllers/CoolRectangles";
 import Blob from '../public/Controllers/Blob'
+import PolyGrid from "../public/Controllers/PolyGrid";
 //Styles
 import styles from "../styles/Home.module.css";
 //Utils
@@ -42,6 +43,7 @@ export default function Home() {
         {controllerId === 8 && <SuperWave />}
         {controllerId === 9 && <CoolRectangles />}
         {controllerId === 10 && <Blob />}
+        {controllerId === 11 && <PolyGrid />}
       </main>
     </div>
   );

@@ -5,6 +5,8 @@ import ControllPanel from "../Components/ControllPanel";
 import { InputSlider } from "../Helpers/UsefullComponents";
 //React
 import { useState, useRef} from "react";
+//functions
+import {randNum} from '../Helpers/Utilities'
 
 
 function RadialGradient() {

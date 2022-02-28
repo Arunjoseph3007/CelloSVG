@@ -1,6 +1,6 @@
 import { useState,useRef } from "react";
 import styles from "../../styles/Home.module.css";
-import { ChromePicker, BlockPicker } from "react-color";
+import { BlockPicker } from "react-color";
 import { useOnClickOutside } from "./CustomHooks";
 
 export const RadioFill = ({

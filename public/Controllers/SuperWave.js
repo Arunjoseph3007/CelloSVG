@@ -7,8 +7,7 @@ import { useEffect, useState, useRef } from "react";
 import { RadioFill, InputSlider } from "../Helpers/UsefullComponents";
 //functions
 import { getArrayOfRandomPoints } from "../Helpers/Utilities";
-//D3
-import * as d3 from "d3";
+import { getWaveFromPoints } from "../Helpers/D3Helpers";
 //styles
 import styles from "../../styles/Home.module.css";
 
@@ -24,21 +23,6 @@ function SuperWave() {
   const [wave, setWave] = useState(getArrayOfRandomPoints());
 
   const shapes = ["wave", "step", "line"];
-
-  const line = d3.line();
-
-  const getWaveFromPoints = (wave, shape) => {
-    switch (shape) {
-      case "step":
-        return line.curve(d3.curveStep)(wave);
-      case "wave":
-        return line.curve(d3.curveCardinal)(wave);
-      case "line":
-        return line(wave);
-      default:
-        return line(wave);
-    }
-  };
 
   const reset = () => setWave(getArrayOfRandomPoints(complexity, contrast));
 
@@ -56,6 +40,7 @@ function SuperWave() {
               stroke={secClr}
               strokeWidth={10}
               fill={fill ? secClr : "transparent"}
+              style={{transition:"all 0.3s ease"}}
             ></path>
           </svg>
         </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect ,useRef} from "react";
 
 export function useArray(defaultValue) {
   const [array, setArray] = useState(defaultValue);
@@ -26,9 +26,17 @@ export const useOnClickOutside = (ref, handler) => {
       if (!ref.current || ref.current.contains(event.target)) return;
       handler(event);
     };
+    document.addEventListener("mousedown", listener);
     document.addEventListener("touchstart", listener);
     return () => {
       document.removeEventListener("mousedown", listener);
+      document.removeEventListener("touchstart", listener);
     };
   }, [ref, handler]);
+};
+
+export const usePreviousState = (value) => {
+  const ref = useRef();
+  useEffect(() => (ref.current = value), [value]);
+  return ref.current;
 };

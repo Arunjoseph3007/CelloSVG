@@ -5,6 +5,7 @@ const Modal = ({ modal, setModal, elm }) => {
   const [copied, setCopied] = useState(false);
   const canvasRef = useRef(null);
   const [uri, setURI] = useState();
+  const [url, setURL] = useState();
 
   const handleCopy = () => {
     navigator.clipboard.writeText(elm.current.innerHTML);
@@ -13,20 +14,27 @@ const Modal = ({ modal, setModal, elm }) => {
   };
 
   useEffect(() => {
+    //get window
+    const win = window.URL || window.webkitURL || window;
+
+    //get url for svg
+    const svgBlob = new Blob([elm.current.innerHTML]);
+    const svgURL = win.createObjectURL(svgBlob);
+    setURL(svgURL);
+
     const canvas = canvasRef.current;
     const svg = htmlToElem(elm.current.innerHTML);
     const data = new XMLSerializer().serializeToString(svg);
 
-    const win = window.URL || window.webkitURL || window;
-    const blob = new Blob([data], { type: "image/svg+xml" });
-    const url = win.createObjectURL(blob);
+    const pngBlob = new Blob([data], { type: "image/svg+xml" });
+    const pngUrl = win.createObjectURL(pngBlob);
 
     const img = new Image();
-    img.src = url;
+    img.src = pngUrl;
 
     img.onload = function () {
       canvas.getContext("2d").drawImage(img, 0, 0);
-      win.revokeObjectURL(url);
+      win.revokeObjectURL(pngUrl);
       const imguri = canvas
         .toDataURL("image/png")
         .replace("image/png", "octet/stream");
@@ -60,7 +68,7 @@ const Modal = ({ modal, setModal, elm }) => {
           <a
             download="cello-svg.svg"
             className={styles.downloadbutton}
-            href={getURL(elm)}
+            href={url}
           >
             DOWNLOAD SVG
           </a>
@@ -85,6 +93,3 @@ function htmlToElem(html) {
   temp.innerHTML = html;
   return temp.content.firstChild;
 }
-
-const getURL = (svgRef) =>
-  URL.createObjectURL(new Blob([svgRef.current.innerHTML]));

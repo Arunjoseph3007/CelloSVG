@@ -114,12 +114,41 @@ export const getArrayOfRandomPoints = (complexity = 10, contrast = 25) => {
   return newArray;
 };
 
-export const getBlob = () => {
+export const getBlob = (complexity = 6, contrast = 0.8) => {
+  const angle = 360 / complexity;
   const blob = [];
   for (let i = 0; i < 360; ) {
-    blob.push([Math.sin(i), Math.cos(i)]);
-    const incrementAngle = randInt(10, 20);
+    const innerRadius = randInt(150, 250);
+    const outerRadius = innerRadius * (1 - contrast);
+    const incrementAngle = randInt(angle - 10, +angle + 10);
     i += incrementAngle;
+    if (i > 360) break;
+    blob.push([
+      innerRadius * Math.cos(angleToRadian(i)),
+      innerRadius * Math.sin(angleToRadian(i)),
+    ]);
+    if (i > 360) break;
+    i += incrementAngle;
+    blob.push([
+      outerRadius * Math.cos(angleToRadian(i)),
+      outerRadius * Math.sin(angleToRadian(i)),
+    ]);
   }
   return blob;
+};
+
+export const getPolyGridPoints = (distortion = 0,resolution=10) => {
+  const step = 700 / resolution;
+  const newPoints = [];
+  for (let y = -20; y <= 720 + step; y += +step) {
+    const newRow = [];
+    for (let x = -20; x <= 520 + step; x += +step) {
+      newRow.push({
+        x: x + distortion * (step * randNum(-0.5, 0.5)),
+        y: y + distortion * (step * randNum(-0.5, 0.5)),
+      });
+    }
+    newPoints.push(newRow);
+  }
+  return newPoints;
 };
