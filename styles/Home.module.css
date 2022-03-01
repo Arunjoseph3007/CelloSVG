@@ -9,16 +9,58 @@
 }
 .selector {
   overflow-y: scroll;
-  width: 18%;
+  overflow-x: hidden;
+  width: 20%;
+  min-width: 100px;
   background-color: rgb(24, 24, 24);
   padding: 0rem;
   height: 100%;
+  z-index: 10;
 }
 .panel {
-  width: 700px;
-  height: 500px;
+  width: 55%;
+  display: flex;
+  justify-content: center;
+  aspect-ratio: calc(calc(700/500)+px);
   background-color: white;
   position: relative;
+  background-color: black;
+}
+.controller {
+  background-color: rgb(24, 24, 24);
+  width: 25%;
+  height: 100vh;
+  z-index: 10;
+}
+@media (max-width:1300px) {
+  .panel{
+    transform: scale(0.7);
+  }
+}
+@media (max-width:700px){
+  .selector{
+    width: 100%;
+    position: absolute;
+    height: auto;
+  }
+  .main{
+    align-items: center;
+    flex-direction: column;
+  }
+  .listofselectors{
+   display: flex; 
+   overflow-y: scroll;
+  }
+  .listitem{
+    width: 200px;
+  }
+  .panel{
+    transform: scale(0.5);
+  }
+  .controller{
+    width: 100%;
+    min-height: 100vh;
+  }
 }
 .dice {
   cursor: pointer;
@@ -58,7 +100,8 @@
   line-height: 1.3rem;
   letter-spacing: 0.2rem;
   font-weight: 900;
-  width: 50vw;
+  width: 80vw;
+  max-width: 700px;
   border-radius: 5px;
 }
 .close {
@@ -103,11 +146,6 @@
   background: black;
   padding: 2rem;
 }
-.controller {
-  background-color: rgb(24, 24, 24);
-  width: 25%;
-  height: 100vh;
-}
 .controllpanel {
   width: 100%;
   height: 87vh;
@@ -140,23 +178,32 @@
   color: white;
   transition: all 0.5s ease-in-out;
 }
-.downloadbutton:hover{
+.downloadbutton:hover {
   background: transparent;
   color: #8e04aa;
 }
 .listitem {
+  border: none;
+  background-size: cover;
+  width: 90%;
+  height: 150px;
   cursor: pointer;
   color: rgb(0, 0, 0);
   font-weight: bold;
   text-shadow: 0 0 45px rgb(0, 0, 0);
   text-align: center;
+  font-size: 1.3rem;
   text-transform: uppercase;
   margin: 0.8rem;
   border-radius: 5px;
   padding: 3rem;
+  transition: all 0.3s ease;
+}
+.listitem:hover{
+  box-shadow: 0 0 100px black inset;
 }
 .selecteditem {
-  box-shadow: 0 0 0 10px rgb(117, 236, 236) inset;
+  border: 10px solid rgb(117, 236, 236) ;
 }
 .title a {
   color: #0070f3;

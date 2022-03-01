@@ -140,9 +140,9 @@ export const getBlob = (complexity = 6, contrast = 0.8) => {
 export const getPolyGridPoints = (distortion = 0,resolution=10) => {
   const step = 700 / resolution;
   const newPoints = [];
-  for (let y = -20; y <= 720 + step; y += +step) {
+  for (let y = -step; y <= 720 + step; y += +step) {
     const newRow = [];
-    for (let x = -20; x <= 520 + step; x += +step) {
+    for (let x = -step; x <= 520 + step; x += +step) {
       newRow.push({
         x: x + distortion * (step * randNum(-0.5, 0.5)),
         y: y + distortion * (step * randNum(-0.5, 0.5)),

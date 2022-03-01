@@ -11,7 +11,7 @@ export const getWaveFromPoints = (wave, shape) => {
       case "wave":
         return line.curve(d3.curveCardinal)(wave);
       case "line":
-        return line(wave);
+        return line.curve(d3.curveLinear)(wave);
       default:
         return line(wave);
     }

@@ -17,49 +17,32 @@ const PolyGrid = () => {
   const [primClr, setPrimClr] = useState("#37d67a");
   const [secClr, setSecClr] = useState("#555555");
   const [borderClr, setBorderClr] = useState("#d9e3f0");
+  const [isRandom, setIsRandom] = useState(false);
   const [borderWidth, setBorderWidth] = useState(0);
-  const [distortion, setDistortion] = useState(0.5);
+  const [distortion, setDistortion] = useState(0.8);
   const [resolution, setResolution] = useState(10);
   const [points, setPoints] = useState([[]]);
+
+  const getFill = (isRandom, i, j, row) =>
+    isRandom
+      ? mixColors(primClr, secClr, Math.random())
+      : mixColors(primClr, secClr, getRatio(i, j, row));
+
+  const getRatio = (i, j, row) =>
+    (i * i + j * j) / (points.length * points.length + row.length * row.length);
+
+  const getPath = (i, j, c) =>
+    c === "a"
+      ? ` ${points[i][j].y},${points[i][j].x} 
+          ${points[i + 1][j].y},${points[i + 1][j].x} 
+          ${points[i + 1][j + 1].y},${points[i + 1][j + 1].x}`
+      : ` ${points[i][j].y},${points[i][j].x} 
+          ${points[i][j + 1].y},${points[i][j + 1].x} 
+          ${points[i + 1][j + 1].y},${points[i + 1][j + 1].x}`;
 
   const reset = () => setPoints(getPolyGridPoints(distortion, resolution));
 
   useEffect(reset, [distortion, resolution]);
-
-  const getPolygons = (array) => {
-    const yLength = array.length;
-    const xLength = array[0].length;
-    return array.map((row, i) => {
-      if (i === yLength - 1) return null;
-      return row.map((p, j) => {
-        if (j === xLength - 1) return null;
-        return (
-          <>
-            <polygon
-              key={i + "a" + j}
-              points={`
-                    ${p.y},${p.x} 
-                    ${points[i + 1][j].y},${points[i + 1][j].x} 
-                    ${points[i + 1][j + 1].y},${points[i + 1][j + 1].x}`}
-              fill={mixColors(primClr, secClr, Math.random())}
-              stroke={borderClr}
-              strokeWidth={borderWidth}
-            />
-            <polygon
-              key={i + "b" + j}
-              points={`
-                  ${p.y},${p.x} 
-                  ${points[i][j + 1].y},${points[i][j + 1].x} 
-                  ${points[i + 1][j + 1].y},${points[i + 1][j + 1].x}`}
-              fill={mixColors(primClr, secClr, Math.random())}
-              stroke={borderClr}
-              strokeWidth={borderWidth}
-            />
-          </>
-        );
-      });
-    });
-  };
 
   return (
     <>
@@ -67,7 +50,30 @@ const PolyGrid = () => {
         <div ref={svg}>
           <svg viewBox="0 0 700 500" width={700} height={500}>
             <rect x="0" y="0" width={700} height={500} fill={primClr}></rect>
-            {getPolygons(points)}
+            {points
+              .filter((row, i) => i != points.length - 1)
+              .map((row, i) =>
+                row
+                  .filter((p, j) => j != row.length - 1)
+                  .map((p, j) => (
+                    <>
+                      <polygon
+                        key={i + "a" + j}
+                        points={getPath(i, j, "a")}
+                        fill={getFill(isRandom, i, j, row)}
+                        stroke={borderClr}
+                        strokeWidth={borderWidth}
+                      />
+                      <polygon
+                        key={i + "b" + j}
+                        points={getPath(i, j, "b")}
+                        fill={getFill(isRandom, i, j, row)}
+                        stroke={borderClr}
+                        strokeWidth={borderWidth}
+                      />
+                    </>
+                  ))
+              )}
           </svg>
         </div>
       </MainPanel>
@@ -79,6 +85,7 @@ const PolyGrid = () => {
         setSecClr={setSecClr}
       >
         <ColorPicker color={borderClr} setColor={setBorderClr} />
+        <RadioFill title="RANDOMizer" optA="RANDOM" optB="GRADIENT" fill={isRandom} setFill={setIsRandom} />
         <InputSlider
           title="DISTORTION"
           value={distortion}

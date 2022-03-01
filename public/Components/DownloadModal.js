@@ -70,14 +70,14 @@ const Modal = ({ modal, setModal, elm }) => {
             className={styles.downloadbutton}
             href={url}
           >
-            DOWNLOAD SVG
+            GET SVG
           </a>
           <a
             download="cello-svg.png"
             className={styles.downloadbutton}
             href={uri}
           >
-            DOWNLOAD PNG
+            GET PNG
           </a>
         </div>
       </div>

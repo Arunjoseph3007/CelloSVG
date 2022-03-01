@@ -13,7 +13,8 @@ a {
   text-decoration: none;
 }
 body{
-  overflow: hidden;
+  /* overflow: hidden; */
+  background-color: black;
 }
 * {
   box-sizing: border-box;

@@ -20,7 +20,7 @@ function SuperWave() {
   const [fill, setFill] = useState(true);
   const [shape, setShape] = useState("wave");
   const [offset, setOffset] = useState(-200);
-  const [wave, setWave] = useState(getArrayOfRandomPoints());
+  const [wave, setWave] = useState([]);
 
   const shapes = ["wave", "step", "line"];
 

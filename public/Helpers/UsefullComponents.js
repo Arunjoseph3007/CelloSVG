@@ -85,7 +85,7 @@ export const ColorPicker = ({ id = 1, special = false, color, setColor ,remove})
   const handleChange = (c, e) =>
     special ? setColor(id, c.hex) : setColor(c.hex);
 
-  useOnClickOutside(picker,()=>{setIsActive(false);console.log("it");})
+  useOnClickOutside(picker,()=>setIsActive(false))
 
   return (
     <div className={styles.colorcontainer}>
@@ -100,7 +100,6 @@ export const ColorPicker = ({ id = 1, special = false, color, setColor ,remove})
       {isActive && (
         <div ref={picker} className={styles.block}>
           <BlockPicker
-            
             width="200px"
             color={color}
             onChangeComplete={(c, e) => handleChange(c, e)}

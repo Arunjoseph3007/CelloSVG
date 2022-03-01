@@ -12,7 +12,7 @@ import {
 //functions
 import { mixColors, getArrayOfRandomPoints } from "../Helpers/Utilities";
 //D3
-import * as d3 from "d3";
+import { getWaveFromPoints } from "../Helpers/D3Helpers";
 //styles
 import styles from "../../styles/Home.module.css";
 
@@ -23,27 +23,12 @@ function StackedWave() {
   const [terClr, setTerClr] = useState("#bbf");
   const [complexity, setComplexity] = useState(13);
   const [contrast, setContrast] = useState(30);
-  const [count, setCount] = useState(1);
-  const [shape, setShape] = useState("wave");
+  const [count, setCount] = useState(10);
+  const [shape, setShape] = useState("line");
   const [offset, setOffset] = useState(-200);
-  const [waves, setWaves] = useState([[[0,0],[100,100],[200,200],[450,12],[0,30]]]);
+  const [waves, setWaves] = useState([[]]);
 
   const shapes = ["wave", "step", "line"];
-
-  const line = d3.line();
-
-  const getWaveFromPoints = (wave, shape) => {
-    switch (shape) {
-      case "step":
-        return line.curve(d3.curveStep)(wave);
-      case "wave":
-        return line.curve(d3.curveCardinal)(wave);
-      case "line":
-        return line(wave);
-      default:
-        return line(wave);
-    }
-  };
 
   const reset = () => {
     const newWaves = [];
@@ -54,7 +39,7 @@ function StackedWave() {
     // console.log(waves);
   };
 
-  useEffect(reset, [complexity, contrast,count]);
+  useEffect(reset, [complexity, contrast, count]);
 
   return (
     <>
@@ -62,9 +47,19 @@ function StackedWave() {
         <div ref={svg}>
           <svg id="visual" viewBox="0 0 700 500" width="700" height="500">
             <rect width="700" height="500" fill={primClr}></rect>
-            {waves.map((w,i)=>{
-              console.log("this is",i,getWaveFromPoints(w,shape));
-              <path key={i} fill={secClr} d={getWaveFromPoints(w,shape)}  />
+            <path
+              transform="translate(0 100)"
+              fill={secClr}
+              d={getWaveFromPoints(waves[0], shape)}
+            />
+            {waves.map((thisWave, i) => {
+              console.log(i, "th wave is", thisWave);
+              <path
+                key={i}
+                fill={secClr}
+                transform="translate(0 100)"
+                d={getWaveFromPoints(thisWave, shape)}
+              />;
             })}
           </svg>
         </div>
