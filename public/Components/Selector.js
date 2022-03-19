@@ -1,24 +1,40 @@
 import { AllControllers } from "../Helpers/ControllerList";
 import styles from "../../styles/Home.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { useOnClickOutside } from "../Helpers/CustomHooks";
 
 function Selector({ controllerId, setControllerId }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLarge, setIsLarge] = useState(true);
+  const listPanel = useRef();
 
-  useEffect(() => {
-    if (window.innerWidth < 700) {
-      setIsLarge(false);
-    }
-  }, []);
+  useEffect(() => setIsLarge(window.innerWidth > 700), []);
+
+  useOnClickOutside(listPanel, () => setIsOpen(false));
 
   return (
     <div className={styles.selector}>
-      <h1 onClick={() => {!isLarge && setIsOpen(!isOpen)}} className={styles.title}>
+      <h1
+        onClick={() => {
+          !isOpen && setIsOpen(!isOpen);
+        }}
+        className={styles.title}
+      >
         Cello<span>SVG</span>
+        <button
+          style={{
+            float: "right",
+            border: "none",
+            background: "tranparent",
+            color: "white",
+          }}
+        >
+          {" "}
+          =
+        </button>
       </h1>
       {(isLarge || isOpen) && (
-        <div>
+        <div ref={listPanel}>
           <div className={styles.listofselectors}>
             {AllControllers.map((ThisController) => (
               <button
